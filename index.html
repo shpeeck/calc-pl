@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-vidth, initial-scale=1.0">
+    <title>Zlotiy</title>
+    <link rel="stylesheet" href="./css/preloader.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+    <div class="preloader">
+        <div class="preloader__row">
+            <div class="preloader__item"></div>
+            <div class="preloader__item"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="app">
+            <div class="heder">
+                <div class="heder__left">
+                    <div>лимит: {{ limit }} PLN <span class="qvest" v-on:click="changeLimit()">?</span></div>
+                    <div>осталось: {{ (limit - summ()).toFixed(2) }} PLN</div>
+                    <div>сейчас: {{ summ().toFixed(2) }} PLN <br>({{ (summ()*curs).toFixed(2) }} UAH)</div>
+                </div>
+                <div class="heder__right">курс: {{ curs  }}<span class="qvest" v-on:click="changeCurs()">?</span></div>
+            </div>
+            <div class="add">
+                <input class="int" type="number" pattern="[0-9]" v-model="message" placeholder="введи сумму">
+                <button class="button" v-on:click="addPrise()">add</button>
+            </div>
+            <p class="left">{{ (message*curs).toFixed(2) }} гривен</p>
+            <!-- <div v-for="(item, index) in arr.slice().reverse()" class="container"> -->
+            <transition-group name="list" tag="p">
+                <div v-for="(item, index) in arr" class="container" :key="item">
+                    <div class="card">
+                        <div>{{ index+1 }}</div>
+                        <div>PLN: {{ item }}</div>
+                        <div>UAH: {{ (item*curs).toFixed(2) }}</div>
+                        <button v-on:click="del(index)" class="del">del</button>
+                    </div>
+                </div>
+            </transition-group>
+            <!-- <p>{{ arr  }}</p> -->
+    
+            <transition name="sss">
+                <!-- <div class="my__limit" v-bind:class="{ hide: isActive}"> -->
+                <div class="my__limit" v-if="show">
+                    <div class="form__wrapper">
+                        <form>
+                            <p>Введите новый лимит</p>
+                            <input class="inp" type="number" v-model="newLimit"></label><br>
+                            <input type="button" value="применить" v-on:click="addLimit()">
+                            <input type="button" value="отмена" v-on:click="clo()" class="tt">
+                        </form>
+                    </div>
+                </div>
+            </transition>
+            <transition name="sss">
+                <!-- <div class="my__curs" v-bind:class="{ hide: isActiveCurs}"> -->
+                <div class="my__curs" v-if="showOne">
+                    <div class="form__wrapper">
+                        <form>
+                            <p>Введите новый курс</p>
+                            <input class="inp" type="number" v-model="newCurs"></label><br>
+                            <input type="button" value="применить" v-on:click="addCurs()">
+                            <input type="button" value="отмена" v-on:click="clo()" class="tt">
+                        </form>
+                    </div>
+                </div>
+            </transition>
+        </div>
+    </div>
+
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+    <script src="./js/vuejs.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
